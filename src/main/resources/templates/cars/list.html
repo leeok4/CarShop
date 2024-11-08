@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Lista de Carros</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <h1>Lista de Carros</h1>
+    <a th:href="@{/cars/form}" class="btn btn-primary mb-3">Novo Carro</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Marca</th>
+            <th>Modelo</th>
+            <th>Preço</th>
+            <th>Foto</th>
+            <th>Ações</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="carro : ${carros}">
+            <td th:text="${carro.id}"></td>
+            <td th:text="${carro.marca}"></td>
+            <td th:text="${carro.modelo}"></td>
+            <td th:text="${#numbers.formatDecimal(carro.preco, 2, 2)}"></td>
+            <td th:text="${carro.foto}"></td>
+            <td>
+                <a th:href="@{/cars/{id}/edit(id=${carro.id})}" class="btn btn-primary btn-sm">Editar</a>
+                <a th:href="@{/carros/{id}/delete(id=${carro.id})}" class="btn btn-danger btn-sm">Excluir</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+</body>
+</html>

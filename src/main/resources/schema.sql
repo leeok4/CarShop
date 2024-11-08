@@ -1,0 +1,7 @@
+CREATE TABLE IF NOT EXISTS Cars (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    brand VARCHAR(255),
+    model VARCHAR(255),
+    price DECIMAL,
+    pic VARCHAR(255)
+    );

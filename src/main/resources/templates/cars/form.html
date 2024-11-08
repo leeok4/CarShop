@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Formulário de Carro</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+<div class="container my-5">
+    <h1 th:if="${cars.id == null}">Novo Carro</h1>
+    <h1 th:if="${cars.id != null}">Editar Carro</h1>
+    <form th:action="@{/cars/save}" method="post" th:object="${car}">
+        <input type="hidden" th:field="*{id}">
+        <div class="form-group">
+            <label for="marca">Marca</label>
+            <input type="text" class="form-control" id="marca" th:field="*{brand}">
+        </div>
+        <div class="form-group">
+            <label for="modelo">Modelo</label>
+            <input type="text" class="form-control" id="modelo" th:field="*{model}">
+        </div>
+        <div class="form-group">
+            <label for="preco">Preço</label>
+            <input type="number" class="form-control" id="preco" th:field="*{price}">
+        </div>
+        <div class="form-group">
+            <label for="foto">Foto</label>
+            <input type="text" class="form-control" id="foto" th:field="*{picture}">
+        </div>
+        <button type="submit" class="btn btn-primary">Salvar</button>
+        <a th:href="@{/list}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>
