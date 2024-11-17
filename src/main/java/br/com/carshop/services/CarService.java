@@ -2,7 +2,6 @@ package br.com.carshop.services;
 
 import br.com.carshop.models.Car;
 import br.com.carshop.models.repositories.CarRepository;
-import org.slf4j.Logger;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,6 @@ import java.util.List;
 @Service
 public class CarService {
     private final CarRepository carRepository;
-    private final Logger logger = org.slf4j.LoggerFactory.getLogger(CarService.class);
 
     public CarService(CarRepository carRepository) {
         this.carRepository = carRepository;
@@ -29,32 +27,21 @@ public class CarService {
     }
 
     public Car createCar(Car car) {
-        try {
-            if (car.getId() != null) {
-                logger.warn("Tentativa de criar carro com ID já existente. Removendo ID.");
-                car.setId(null);
-            }
-            return carRepository.save(car);
-        } catch (Exception e) {
-            logger.error("Erro ao criar carro: {}", e.getMessage(), e);
-            throw new RuntimeException("Erro ao salvar o carro", e);
+        if (car.getId() != null) {
+            throw new IllegalArgumentException("ID deve ser null para novo carro");
         }
+        return carRepository.save(car);
+    }
+
+    public Car updateCar(Car car) {
+        if (car.getId() == null) {
+            throw new IllegalArgumentException("ID não pode ser null para atualização");
+        }
+        return carRepository.save(car);
     }
 
     public Car getCar(Long id) {
         return carRepository.findById(id).orElse(null);
-    }
-
-    public Car updateCar(Car car) {
-        try {
-            if (car.getId() == null) {
-                throw new RuntimeException("ID do carro não informado");
-            }
-            return carRepository.save(car);
-        } catch (Exception e) {
-            logger.error("Erro ao atualizar carro: {}", e.getMessage(), e);
-            throw new RuntimeException("Erro ao atualizar o carro", e);
-        }
     }
 
     public void deleteCar(Long id) {

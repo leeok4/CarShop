@@ -4,6 +4,7 @@ import br.com.carshop.controllers.CarController;
 import br.com.carshop.models.Car;
 import br.com.carshop.services.CarService;
 import br.com.carshop.services.FileStorageService;
+import br.com.carshop.services.FipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -19,7 +20,7 @@ import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -32,6 +33,9 @@ class CarControllerTest {
     private FileStorageService fileStorageService;
 
     @Mock
+    private FipeService fipeService;
+
+    @Mock
     private Model model;
 
     @Mock
@@ -41,6 +45,7 @@ class CarControllerTest {
     private CarController carController;
 
     private Car testCar;
+    private List<FipeService.Marca> testBrands;
 
     @BeforeEach
     void setUp() {
@@ -49,6 +54,16 @@ class CarControllerTest {
         testCar.setBrand("Toyota");
         testCar.setModel("Corolla");
         testCar.setPrice(120000.00);
+
+        FipeService.Marca marca1 = new FipeService.Marca();
+        marca1.setCodigo("1");
+        marca1.setNome("Toyota");
+
+        FipeService.Marca marca2 = new FipeService.Marca();
+        marca2.setCodigo("2");
+        marca2.setNome("Honda");
+
+        testBrands = Arrays.asList(marca1, marca2);
     }
 
     @Test
@@ -64,10 +79,13 @@ class CarControllerTest {
 
     @Test
     void showNewCarForm_ShouldReturnFormView() {
+        when(fipeService.getBrands()).thenReturn(testBrands);
+
         String viewName = carController.showNewCarForm(model);
 
         assertThat(viewName).isEqualTo("cars/form");
         verify(model).addAttribute(eq("car"), any(Car.class));
+        verify(model).addAttribute("brands", testBrands);
     }
 
     @Test

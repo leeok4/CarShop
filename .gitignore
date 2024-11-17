@@ -34,6 +34,50 @@ build/
 
 ### Project Specific ###
 /uploads/
-application.properties
-application-dev.properties
-application-prod.properties
+/logs/
+*.log
+
+### Configuration Files ###
+src/main/resources/application.properties
+src/main/resources/application.yml
+src/main/resources/application-*.properties
+src/main/resources/application-*.yml
+**/application-local*
+
+### Security ###
+*.pem
+*.key
+*.p12
+*.jks
+*.keystore
+*.truststore
+credentials.json
+secrets.yaml
+.env
+
+### OS Specific ###
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+### Docker ###
+docker-compose.override.yml
+.docker/
+
+### Maven ###
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+mvnw
+mvnw.cmd
+
+### Development Tools ###
+*.patch
+*.diff
+*.orig
+.gradle
+
+### Testing ###
+*.hprof
+coverage/
+test-output/
