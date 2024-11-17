@@ -1,38 +1,101 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Lista de Carros</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CarShop - Catálogo</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
-<div class="container my-5">
-    <h1>Lista de Carros</h1>
-    <a th:href="@{/cars/form}" class="btn btn-primary mb-3">Novo Carro</a>
-    <table class="table table-striped">
-        <thead>
-        <tr>
-            <th>ID</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Preço</th>
-            <th>Foto</th>
-            <th>Ações</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="carro : ${carros}">
-            <td th:text="${carro.id}"></td>
-            <td th:text="${carro.marca}"></td>
-            <td th:text="${carro.modelo}"></td>
-            <td th:text="${#numbers.formatDecimal(carro.preco, 2, 2)}"></td>
-            <td th:text="${carro.foto}"></td>
-            <td>
-                <a th:href="@{/cars/{id}/edit(id=${carro.id})}" class="btn btn-primary btn-sm">Editar</a>
-                <a th:href="@{/carros/{id}/delete(id=${carro.id})}" class="btn btn-danger btn-sm">Excluir</a>
-            </td>
-        </tr>
-        </tbody>
-    </table>
+<!-- Navegação -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <div class="container">
+        <a class="navbar-brand" href="/">CarShop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link" href="/">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" th:href="@{/cars}">Catálogo</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" th:href="@{/cars/new}">Novo Carro</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<div class="container mt-4">
+    <!-- Cabeçalho da Página -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Catálogo de Carros</h2>
+    </div>
+
+    <!-- Mensagens de Feedback -->
+    <div th:if="${sucesso}" class="alert alert-success alert-dismissible fade show" role="alert">
+        <span th:text="${sucesso}">Sucesso!</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <div th:if="${erro}" class="alert alert-danger alert-dismissible fade show" role="alert">
+        <span th:text="${erro}">Erro!</span>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+
+    <!-- Lista de Carros -->
+    <div th:if="${#lists.isEmpty(cars)}" class="alert alert-info">
+        Nenhum carro cadastrado no momento.
+    </div>
+
+    <div th:unless="${#lists.isEmpty(cars)}" class="table-responsive">
+        <table class="table table-striped table-hover">
+            <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Foto</th>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Preço</th>
+                <th>Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="car : ${cars}">
+                <td th:text="${car.id}">1</td>
+                <td>
+                    <img th:if="${car.picture}" th:src="${car.picture}" alt="Foto do carro"
+                         style="max-height: 50px; max-width: 50px; object-fit: cover;">
+                    <span th:unless="${car.picture}" class="text-muted">Sem foto</span>
+                </td>
+                <td th:text="${car.brand}">Marca</td>
+                <td th:text="${car.model}">Modelo</td>
+                <td th:text="${'R$ ' + #numbers.formatDecimal(car.price, 0, 'POINT', 2, 'COMMA')}">R$ 0,00</td>
+                <td>
+                    <div class="btn-group" role="group">
+                        <a th:href="@{/cars/{id}(id=${car.id})}" class="btn btn-info btn-sm">
+                            <i class="bi bi-eye"></i> Ver
+                        </a>
+                        <a th:href="@{/cars/{id}/edit(id=${car.id})}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil"></i> Editar
+                        </a>
+                        <a th:href="@{/cars/{id}/delete(id=${car.id})}"
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Tem certeza que deseja excluir este carro?')">
+                            <i class="bi bi-trash"></i> Excluir
+                        </a>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
