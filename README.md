@@ -4,6 +4,10 @@
 CarShop é um sistema de gerenciamento de carros desenvolvido com Spring Boot que permite cadastrar, visualizar, editar e excluir informações de veículos. O sistema integra-se com a API FIPE para obter informações precisas sobre marcas e modelos, além de utilizar IA para sugerir preços baseados no mercado atual.
 Por se tratar de um projeto de conclusão de curso tentei executar de forma simples, sem muitas funcionalidades.
 Utilizei algumas tecnologias que possuia um conhecimento avançado, como Java, Spring Boot, Thymeleaf, Bootstrap, jQuery e Maven.
+Sobre o processo de desenvolvimento, tentei utilizar boas praticas de programação, seguindo alguns padrões de projeto para organização do código, como MVC, Repository, Service, DTO, etc.
+Para a persistência dos dados utilizei o banco de dados H2, por ser um banco de dados em memória, facilitando a execução do projeto.
+Realizei a integração com a FIPE para obter informações sobre marcas e modelos de veículos, e com a OpenAI para sugerir preços baseados no mercado atual.
+Alguns desafios sobre o processo de desenvolvimento é sempre manter o código limpo e organizado, e a integração com a API da OpenAI, pois foi a primeira vez que utilizei a API.
 
 ## Funcionalidades
 - Cadastro completo de veículos
