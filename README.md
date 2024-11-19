@@ -14,7 +14,6 @@ Alguns desafios sobre o processo de desenvolvimento é sempre manter o código l
 - Integração com API FIPE para marcas e modelos
 - Upload de imagens dos veículos
 - Sugestão de preços usando IA
-- Listagem com filtros e ordenação
 - Interface responsiva e amigável
 
 ## Tecnologias Utilizadas
